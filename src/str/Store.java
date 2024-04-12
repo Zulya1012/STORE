@@ -1,7 +1,6 @@
 package str;
+import java.sql.SQLException;
 import java.util.Scanner;
-import java.sql.*;
-import java.text.DecimalFormat;
 public class Store {
 
 	public static void main(String[] args) throws SQLException, ClassNotFoundException{
@@ -21,23 +20,8 @@ public class Store {
 		
 		System.out.println(tem.getName()+ " " + tem.getExpirationDate()+ " "+ tem.getPieceCount());
 		
-		Class.forName("org.sqlite.JDBC");
-		 Connection conn = DriverManager.getConnection("jdbc:sqlite:C:\\DB\\database.db");
-		 System.out.println("Connected to SQLite database");
-		 // Create the SQL INSERT statement
-		 DecimalFormat df = new DecimalFormat("#.00");
-		 df.setDecimalSeparatorAlwaysShown(true); 
-		    String sql = String.format("INSERT INTO store (name, expirationDate, pieceCount) " +
-		                 "VALUES ('%s', '%s', %d)", tem.getName(), tem.getExpirationDate(), tem.getPieceCount());
-		    System.out.println(sql);
-		    Statement stmt = null;
-		    stmt = conn.createStatement();
-		    int rowsInserted = stmt.executeUpdate(sql);
-		    System.out.println(rowsInserted + " row(s) inserted.");
-
-		    // Close the connection
-		    conn.close();
-		 
+		ItemDB db = new ItemDB();
+		 db.Save(tem);
 
 
 
