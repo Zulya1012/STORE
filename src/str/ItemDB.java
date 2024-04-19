@@ -55,12 +55,28 @@ public class ItemDB {
 
         while (resultSet.next()) {
            count = resultSet.getInt("cnt");
-            
-
-           
+                      
         }
         return count;
 	}
 	
+	public int findMaxId () throws SQLException, ClassNotFoundException {
+		int max = 0;
+		Class.forName("org.sqlite.JDBC");
+		Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\DB\\database.db");
+		System.out.println("Connected to SQLite database");
+		System.out.println("Connected to SQLite has been established.");
+		
+	Statement statement = connection.createStatement();
+	String sql = "Select max (id) mxm From Store";
+	ResultSet resultSet = statement.executeQuery(sql);
+	
+	while (resultSet.next()) {
+		max = resultSet.getInt("mxm"); 
+	}
+	return max;
+	
+	}
+		
+	}
 
-}

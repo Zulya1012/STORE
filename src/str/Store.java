@@ -19,8 +19,9 @@ public class Store {
 	        String expirationDate = s.next();
 	        System.out.println("Enter piece count for item");
 	        int pieceCount = s.nextInt();
-	        System.out.println("Enter identification number");
-	        int id = s.nextInt();
+	        ItemDB db = new ItemDB();
+	        int id = db.findMaxId()+1;
+	       
 	   
 	        tem.setName(name);
 	        tem.setExpirationDate(expirationDate);
@@ -29,13 +30,11 @@ public class Store {
 
 	        System.out.println(tem.getName() + " " + tem.getExpirationDate() + " " + tem.getPieceCount() + " " + tem.getId());
 
-	        ItemDB db = new ItemDB();
-	        if (db.foundId(id)==0) {
+	       
+	       if (db.foundId(id)==0)
 	        	db.Save(tem);
-	        }
-	        else {
-	        	System.out.println("There is such an Id");
-	        } 
+	  
+	        
 	    }
 	        
 	    else if (choice == 2) {
