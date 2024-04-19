@@ -4,6 +4,7 @@ public class Item {
 	private String name;
 	private String expirationDate;
 	private int pieceCount;
+	private int id;
 	
 	public String getName() {
 		return name;
@@ -22,6 +23,12 @@ public class Item {
 	}
 	public void setPieceCount(int pieceCount) {
 		this.pieceCount = pieceCount;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 
