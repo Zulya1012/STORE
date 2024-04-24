@@ -14,9 +14,9 @@ public class Store {
 	    if (choice == 1) {
 	        
 	        System.out.println("Enter the name for item");
-	        String name = s.next();
+	        String name = s.nextLine();
 	        System.out.println("Enter the expiration date for item");
-	        String expirationDate = s.next();
+	        String expirationDate = s.nextLine();
 	        System.out.println("Enter piece count for item");
 	        int pieceCount = s.nextInt();
 	        ItemDB db = new ItemDB();
@@ -42,7 +42,7 @@ public class Store {
 	        System.out.println("Enter the ID of the item you want to update:");
 	        int id = s.nextInt();
 	        System.out.println("Enter the new name for the item:");
-	        String name = s.next();
+	        String name = s.nextLine();
 	        System.out.println("Enter the new expiration date for the item:");
 	        String expirationDate = s.next();
 	        System.out.println("Enter the new piece count for the item:");

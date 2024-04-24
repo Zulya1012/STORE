@@ -47,7 +47,7 @@ public class ItemDB {
 		 Class.forName("org.sqlite.JDBC");
 		    Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\DB\\database.db");
 		    System.out.println("Connected to SQLite database");
-		    System.out.println("Connection to SQLite has been established.");
+		    System.out.println("Connection to SQLite has been established");
 
         Statement statement = connection.createStatement();
         String sql = "SELECT count (*) as cnt FROM Store WHERE id = "+ id;
