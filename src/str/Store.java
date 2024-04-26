@@ -28,6 +28,9 @@ public class Store {
 			int pieceCount = sc.nextInt();
 			System.out.println("Enter the price for item");
 			double price = sc.nextDouble();
+			sc.nextLine();
+			System.out.println("Enter the weight for item");
+			double weight = sc.nextDouble();
 			//создаем новый объект itemDB для работы с базой данных
 			ItemDB db = new ItemDB();
 			// к перемменной id присваиваем максимальное число, найденное в базе данных и добаляем к нему 1
@@ -41,9 +44,10 @@ public class Store {
 			tem.setPeiceCount(pieceCount);
 			tem.setId(id);
 			tem.setPrice(price);
+			tem.setWeight(weight);
 			
 			//выводим на консоль все свойства товаров 
-			System.out.println (tem.getName()+ " "+ tem.getExpirationDate()+ " " +tem.getPieceCount()+ " "+ tem.getId()+ " "+tem.getPrice());
+			System.out.println (tem.getName()+ " "+ tem.getExpirationDate()+ " " +tem.getPieceCount()+ " "+ tem.getId()+ " "+tem.getPrice()+ " "+tem.getWeight());
 			
 			//проверка условия, если введенный в консоли id код не совпадает с существующими id кодами, 
 			//то этот id сохраняется в базе данных
@@ -66,6 +70,8 @@ public class Store {
 			int pieceCount = sc.nextInt();
 			System.out.println("Enter the new price for the item");
 			double price = sc.nextDouble();
+			System.out.println("Enter the new weight for the weight");
+			double weight = sc.nextDouble();
 			
 			//устанавливаем измененные свойства товара
 			tem.setId(id);
@@ -73,6 +79,7 @@ public class Store {
 			tem.setExpirationDate(expirationDate);
 			tem.setPeiceCount(pieceCount);
 			tem.setPrice(price);
+			tem.setWeight(weight);
 			
 			//создаем новый объект itemDB для обновления свойств товара
 			ItemDB db = new ItemDB();

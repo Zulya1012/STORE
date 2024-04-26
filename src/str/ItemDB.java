@@ -12,9 +12,9 @@ public class ItemDB {
 	public void Save(Item item) throws SQLException, ClassNotFoundException {
 		// создание sql запроса для вставки данных в таблицу
 		String sql = String.format(
-				"INSERT INTO store  (name, expirationDate, pieceCount, id, price)"
-						+ "VALUES ('%s', '%s', '%d', '%d', '%.2f' )",
-				item.getName(), item.getExpirationDate(), item.getPieceCount(), item.getId(), item.getPrice());
+				"INSERT INTO str  (name, expirationDate, pieceCount, id, price, weight)"
+						+ "VALUES ('%s', '%s', '%d', '%d', '%.2f', '%.2f')",
+				item.getName(), item.getExpirationDate(), item.getPieceCount(), item.getId(), item.getPrice(), item.getWeight());
 		System.out.println(sql);
 		// вставка в базу данных. Возвращает количество строк, вставленных в таблицу
 		int rowsInserted = connectionDB().executeUpdate(sql);
@@ -26,8 +26,8 @@ public class ItemDB {
 	public void updateItem(Item item) throws SQLException, ClassNotFoundException {
 		DecimalFormat df = new DecimalFormat("#.##");
 		String sql = String.format(
-				"UPDATE store SET name= '%s', expirationDate = '%s', pieceCount = %d, price = '%s' WHERE id = %d",
-				item.getName(), item.getExpirationDate(), item.getPieceCount(), df.format(item.getPrice()),
+				"UPDATE str SET name= '%s', expirationDate = '%s', pieceCount = %d, price = '%s', weight = '%s' WHERE id = %d",
+				item.getName(), item.getExpirationDate(), item.getPieceCount(), df.format(item.getPrice()), df.format(item.getWeight()),
 				item.getId());
 		System.out.println(sql);
 		// добавляет элемент в базу данных
@@ -42,7 +42,7 @@ public class ItemDB {
 		int count = 0;
 		// создается запрос к столбцу с названием cnt с помощью where получает данные,
 		// удовлетворяющей условию
-		String sql = "Select count (*) as cnt FROM store WHERE id = " + id;
+		String sql = "Select count (*) as cnt FROM str WHERE id = " + id;
 		// выполняет запрос к базе данных и сохраняет результат в объект ResultSet
 		ResultSet resultSet = connectionDB().executeQuery(sql);
 
@@ -59,7 +59,7 @@ public class ItemDB {
 	public int findMaxId() throws SQLException, ClassNotFoundException {
 		int max = 0;
 		// создается запрос к столбцу где находит максимальное число
-		String sql = "Select max (id) mxm From store ";
+		String sql = "Select max (id) mxm From str ";
 		// выполняет запрос к базе данных и сохраняет результат в объект ResultSet
 		ResultSet resultSet = connectionDB().executeQuery(sql);
 		// Перебираем результаты запроса
@@ -72,7 +72,7 @@ public class ItemDB {
 
 	public void deleteItem(int id) throws SQLException, ClassNotFoundException {
 
-		String sql = "Delete From store WHERE id =" + id;
+		String sql = "Delete From str WHERE id =" + id;
 		int row = connectionDB().executeUpdate(sql);
 
 	}

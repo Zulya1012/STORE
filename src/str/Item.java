@@ -7,6 +7,7 @@ public class Item {
 	private int pieceCount;
 	private int id;
 	private double price;
+	private double weight;
 	
 	//метод который позволяет получать значение name
 	public String getName() {
@@ -47,5 +48,13 @@ public class Item {
 	
 	public void setPrice(double price) {
 		this.price = price;
+	}
+	
+	public double getWeight() {
+		return weight;
+	}
+	
+	public void setWeight(double weight) {
+		this.weight = weight;
 	}
 }
