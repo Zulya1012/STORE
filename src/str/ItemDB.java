@@ -1,82 +1,88 @@
 package str;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
-import java.sql.*;
 
 public class ItemDB {
-	
-	public void Save(Item item) throws SQLException, ClassNotFoundException{
-		Class.forName("org.sqlite.JDBC");
-		 Connection conn = DriverManager.getConnection("jdbc:sqlite:C:\\DB\\database.db");
-		 System.out.println("Connected to SQLite database");
-		 // Create the SQL INSERT statement
-		 DecimalFormat df = new DecimalFormat("#.00");
-		 df.setDecimalSeparatorAlwaysShown(true); 
-		    String sql = String.format("INSERT INTO store (name, expirationDate, pieceCount, id) " +
-		                 "VALUES ('%s', '%s', %d, %d)", item.getName(), item.getExpirationDate(), item.getPieceCount(), item.getId());
-		    System.out.println(sql);
-		    Statement stmt = null;
-		    stmt = conn.createStatement();
-		    int rowsInserted = stmt.executeUpdate(sql);
-		    System.out.println(rowsInserted + " row(s) inserted.");
-
-		    // Close the connection
-		    conn.close();
+	// метод itemDB сохраняет все свойства товара
+	public void Save(Item item) throws SQLException, ClassNotFoundException {
+		// создание sql запроса для вставки данных в таблицу
+		String sql = String.format(
+				"INSERT INTO store  (name, expirationDate, pieceCount, id, price)"
+						+ "VALUES ('%s', '%s', '%d', '%d', '%.2f' )",
+				item.getName(), item.getExpirationDate(), item.getPieceCount(), item.getId(), item.getPrice());
+		System.out.println(sql);
+		// вставка в базу данных. Возвращает количество строк, вставленных в таблицу
+		int rowsInserted = connectionDB().executeUpdate(sql);
+		// выводит количество строк вставленных в таблицу
+		System.out.println(rowsInserted + "row(s) inserted. ");
 	}
+
+	// метод с помощью которого обновляем свойства товара
 	public void updateItem(Item item) throws SQLException, ClassNotFoundException {
-	    Class.forName("org.sqlite.JDBC");
-	    Connection conn = DriverManager.getConnection("jdbc:sqlite:C:\\DB\\database.db");
-	    System.out.println("Connected to SQLite database");
-
-	    // Create the SQL UPDATE statement
-	    String sql = String.format("UPDATE store SET name = '%s', expirationDate = '%s', pieceCount = %d WHERE id = %d",
-	            item.getName(), item.getExpirationDate(), item.getPieceCount(), item.getId());
-	    System.out.println(sql);
-	    Statement stmt = conn.createStatement();
-	    int rowsUpdated = stmt.executeUpdate(sql);
-	    System.out.println(rowsUpdated + " row(s) updated.");
-
-	    // Close the connection
-	    conn.close();
+		DecimalFormat df = new DecimalFormat("#.##");
+		String sql = String.format(
+				"UPDATE store SET name= '%s', expirationDate = '%s', pieceCount = %d, price = '%s' WHERE id = %d",
+				item.getName(), item.getExpirationDate(), item.getPieceCount(), df.format(item.getPrice()),
+				item.getId());
+		System.out.println(sql);
+		// добавляет элемент в базу данных
+		int rowsInserted = connectionDB().executeUpdate(sql);
+		System.out.println(rowsInserted + "row(s) inserted. ");
 	}
-	
-	public int foundId (int id) throws SQLException, ClassNotFoundException {
-		int count=0;
-		 Class.forName("org.sqlite.JDBC");
-		    Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\DB\\database.db");
-		    System.out.println("Connected to SQLite database");
-		    System.out.println("Connection to SQLite has been established.");
 
-        Statement statement = connection.createStatement();
-        String sql = "SELECT count (*) as cnt FROM Store WHERE id = "+ id;
-        ResultSet resultSet = statement.executeQuery(sql);
+	// метод который принимает Id код товара и возвращает количество совпадений в
+	// базе данных
+	public int foundID(int id) throws SQLException, ClassNotFoundException {
+		// создаем переменную count
+		int count = 0;
+		// создается запрос к столбцу с названием cnt с помощью where получает данные,
+		// удовлетворяющей условию
+		String sql = "Select count (*) as cnt FROM store WHERE id = " + id;
+		// выполняет запрос к базе данных и сохраняет результат в объект ResultSet
+		ResultSet resultSet = connectionDB().executeQuery(sql);
 
-        while (resultSet.next()) {
-           count = resultSet.getInt("cnt");
-                      
-        }
-        return count;
+		// Перебираем результаты запроса
+		while (resultSet.next()) {
+			// сохраняем макс значение в переменной count
+			count = resultSet.getInt("cnt");
+		}
+		return count;
+
 	}
-	
-	public int findMaxId () throws SQLException, ClassNotFoundException {
+
+	// метод который нахлдит и возвращает нам максимальное число
+	public int findMaxId() throws SQLException, ClassNotFoundException {
 		int max = 0;
-		Class.forName("org.sqlite.JDBC");
-		Connection connection = DriverManager.getConnection("jdbc:sqlite:C:\\DB\\database.db");
-		System.out.println("Connected to SQLite database");
-		System.out.println("Connected to SQLite has been established.");
-		
-	Statement statement = connection.createStatement();
-	String sql = "Select max (id) mxm From Store";
-	ResultSet resultSet = statement.executeQuery(sql);
-	
-	while (resultSet.next()) {
-		max = resultSet.getInt("mxm"); 
-	}
-	return max;
-	
-	}
-		
+		// создается запрос к столбцу где находит максимальное число
+		String sql = "Select max (id) mxm From store ";
+		// выполняет запрос к базе данных и сохраняет результат в объект ResultSet
+		ResultSet resultSet = connectionDB().executeQuery(sql);
+		// Перебираем результаты запроса
+		while (resultSet.next()) {
+			// сохраняем макс значение в переменной max
+			max = resultSet.getInt("mxm");
+		}
+		return max;
 	}
 
+	public void deleteItem(int id) throws SQLException, ClassNotFoundException {
+
+		String sql = "Delete From store WHERE id =" + id;
+		int row = connectionDB().executeUpdate(sql);
+
+	}
+
+	public Statement connectionDB() throws SQLException, ClassNotFoundException {
+		Class.forName("org.sqlite.JDBC");
+		Connection conn = DriverManager.getConnection("jdbc:sqlite:C:\\DB\\database.db");
+		System.out.println("Connected to SQLite database");
+		System.out.println("Connected to SQLite has been established");
+		Statement stm = conn.createStatement();
+		return stm;
+	}
+}
