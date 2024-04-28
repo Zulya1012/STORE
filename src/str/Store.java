@@ -88,7 +88,7 @@ public class Store {
 			tem.setWeight(weight);
 			
 			//создаем новый объект itemDB для обновления свойств товараdb.updateItem(tem);
-			
+			db.connectionDB();
 		}
 		
 		else if (choise==3) {
