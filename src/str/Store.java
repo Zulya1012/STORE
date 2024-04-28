@@ -7,8 +7,12 @@ public class Store {
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {
 		// создание объекта Scanner для считывания информации с консоли
 		Scanner sc = new Scanner (System.in);
+		
 		//создается новый объект с названием Item
 		Item tem = new Item();
+		ItemDB db = new ItemDB();
+		
+		
 		//Выводится на консоль два пункта, один из которых мы должны выбрать
 		System.out.println("1. Add new item");
 		System.out.println("2. Update existing item by ID");
@@ -17,6 +21,8 @@ public class Store {
 		//считываем один из выбранных пунктов с консоли
 		int choise = sc.nextInt();
 		sc.nextLine();
+		
+		
 		//проверяем условия после считывания выбранного пункта
 		//при выборе 1 вводим новые данные товара 
 		if (choise == 1) {
@@ -32,7 +38,7 @@ public class Store {
 			System.out.println("Enter the weight for item");
 			double weight = sc.nextDouble();
 			//создаем новый объект itemDB для работы с базой данных
-			ItemDB db = new ItemDB();
+			
 			// к перемменной id присваиваем максимальное число, найденное в базе данных и добаляем к нему 1
 			//для того, чтобы не было одинаковых id кодов
 			int id = db.findMaxId()+1;
@@ -81,17 +87,15 @@ public class Store {
 			tem.setPrice(price);
 			tem.setWeight(weight);
 			
-			//создаем новый объект itemDB для обновления свойств товара
-			ItemDB db = new ItemDB();
-			db.updateItem(tem);
+			//создаем новый объект itemDB для обновления свойств товараdb.updateItem(tem);
 			
 		}
 		
 		else if (choise==3) {
 			System.out.println("Enter the id item");
 			int id = sc.nextInt();
-			
-			ItemDB db = new ItemDB();
+			sc.nextInt();
+		
 			db.deleteItem(id);
 			
 		}

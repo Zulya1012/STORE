@@ -80,9 +80,9 @@ public class ItemDB {
 	public Statement connectionDB() throws SQLException, ClassNotFoundException {
 		Class.forName("org.sqlite.JDBC");
 		Connection conn = DriverManager.getConnection("jdbc:sqlite:C:\\DB\\database.db");
-		System.out.println("Connected to SQLite database");
-		System.out.println("Connected to SQLite has been established");
 		Statement stm = conn.createStatement();
 		return stm;
 	}
+	
+	
 }
