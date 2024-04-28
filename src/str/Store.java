@@ -94,8 +94,7 @@ public class Store {
 		else if (choise==3) {
 			System.out.println("Enter the id item");
 			int id = sc.nextInt();
-			sc.nextInt();
-		
+			sc.nextLine();
 			db.deleteItem(id);
 			
 		}
