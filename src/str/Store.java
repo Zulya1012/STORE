@@ -69,7 +69,6 @@ public class Store {
 			sc.nextLine();
 			System.out.println("Enter the new name for the item: ");
 			String name = sc.nextLine();
-			sc.nextLine();
 			System.out.println("Enter the new expiration for the item: ");
 			String expirationDate = sc.nextLine();
 			System.out.println("Enter the new peice count for the item: ");
@@ -78,6 +77,7 @@ public class Store {
 			double price = sc.nextDouble();
 			System.out.println("Enter the new weight for the weight");
 			double weight = sc.nextDouble();
+			sc.nextLine();
 			
 			//устанавливаем измененные свойства товара
 			tem.setId(id);
@@ -87,7 +87,7 @@ public class Store {
 			tem.setPrice(price);
 			tem.setWeight(weight);
 			
-			//создаем новый объект itemDB для обновления свойств товараdb.updateItem(tem);
+			db.updateItem(tem);
 			db.connectionDB();
 		}
 		
