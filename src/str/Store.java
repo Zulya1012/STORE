@@ -12,7 +12,7 @@ public class Store {
 		Item tem = new Item();
 		ItemDB db = new ItemDB();
 		
-		
+		//test
 		//Выводится на консоль два пункта, один из которых мы должны выбрать
 		System.out.println("1. Add new item");
 		System.out.println("2. Update existing item by ID");
