@@ -5,13 +5,13 @@ import java.util.Scanner;
 public class Store {
 //основной метод main на котором строится вся программа
 	public static void main(String[] args) throws SQLException, ClassNotFoundException {
+		//создаем новый объект itemDB для работы с базой данных
+		ItemDB db = new ItemDB();
 		// создание объекта Scanner для считывания информации с консоли
 		Scanner sc = new Scanner (System.in);
 		
 		//создается новый объект с названием Item
 		Item tem = new Item();
-		ItemDB db = new ItemDB();
-		
 		
 		//Выводится на консоль два пункта, один из которых мы должны выбрать
 		System.out.println("1. Add new item");
@@ -37,8 +37,11 @@ public class Store {
 			sc.nextLine();
 			System.out.println("Enter the weight for item");
 			double weight = sc.nextDouble();
+
 			//создаем новый объект itemDB для работы с базой данных
-			
+
+
+
 			// к перемменной id присваиваем максимальное число, найденное в базе данных и добаляем к нему 1
 			//для того, чтобы не было одинаковых id кодов
 			int id = db.findMaxId()+1;
@@ -60,6 +63,7 @@ public class Store {
 			 
 			if (db.foundID(id)==0)
 				db.Save(tem);
+			db.connectionDB();
 		}
 		//если мы в консоли выбрали пункт 2 для изменения данных в базе данных, 
 		//вводим в консоле id код и добавляем новые свойства товара 
@@ -87,16 +91,22 @@ public class Store {
 			tem.setPrice(price);
 			tem.setWeight(weight);
 			
+
 			db.updateItem(tem);
 			db.connectionDB();
+
+			
+
 		}
 		
 		else if (choise==3) {
 			System.out.println("Enter the id item");
 			int id = sc.nextInt();
+
 			sc.nextLine();
+
 			db.deleteItem(id);
-			
+			db.connectionDB();
 		}
 		else {
 			System.out.println("Invalid choise.");
